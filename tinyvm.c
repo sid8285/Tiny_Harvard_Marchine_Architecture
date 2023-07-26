@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
     // asking for the user to input 1, so the subtraction sequence in the multiplication loop works properly
     printf("*** Also, please enter '1' as the first digit, and then the two digits you want to multiply so the machine can perform the function. *** \n");
 
+    //taking all of the instructions out of the text file and reading it into the instruction memory Array.
     int instruction, addr;
     int im_counter = 0;
     while (fscanf(fp, "%d %d", &instruction, &addr) == 2) {
@@ -70,6 +71,7 @@ int main(int argc, char *argv[]) {
     }
     fclose(fp);
 
+    //this case is only if the user wants to see the VM at every stage and computation
     if(viewState == 1){
             // Fetch and execute cycle
         while (IM[PC] != HALT) {
@@ -151,6 +153,7 @@ int main(int argc, char *argv[]) {
                 }
                 break;
 
+            // this is if an invalid code is entered in the text file
             default:
                 printf("Invalid opcode encountered: %d\n", IR.op);
                 break;
@@ -158,11 +161,12 @@ int main(int argc, char *argv[]) {
             
         }
 
-        // Print final status
+        // Print final status of the computer
         printFinal();
         return 0;
     }
 
+    //this case is if the user does not want to see the state of the VM at every stage and computation
     if(viewState == 0){
            // Fetch and execute cycle
         while (IM[PC] != HALT) {
@@ -241,6 +245,7 @@ int main(int argc, char *argv[]) {
                 }
                 break;
 
+            // this is if an invalid code is entered in the text file
             default:
                 printf("Invalid opcode encountered: %d\n", IR.op);
                 break;
@@ -256,7 +261,7 @@ int main(int argc, char *argv[]) {
 
 
     
-
+//this function prints the final status of the computer when the program comes to a Halt
 void printFinal() {
     printf("End of Program.\n");
     printf("Final state:\n");
@@ -271,8 +276,8 @@ void printFinal() {
     printf("]\n");
 }
 
+//this function prints the state of the machine after each instruction is read.
 void printState() {
-    // Function to print the state of the machine after each instruction is read.
     printf("PC = %d | A = %d | DM = [", PC, A);
     for (int i = 0; i < DATA_MEMORY_SIZE; i++) {
         printf("%d", DM[i]);
